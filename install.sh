@@ -56,6 +56,14 @@ _aur() {
 	makepkg -si -D ${full_path} --needed --noconfirm
 }
 
+_pacman() {
+    sudo pacman --needed --noconfirm -S "$@"
+}
+
+_yay() {
+    yay --needed --noconfirm -S "$@"
+}
+
 #------------------------------------
 
 #-----------INSTALLATIONS------------
@@ -68,29 +76,29 @@ set_ML4W_screen() {
 }
 
 install_base_apps() {
-    sudo pacman --needed --noconfirm -S git
-    _aur "git-credential-manager-bin"
+    _pacman git
+    _aur "yay"
 
-    sudo pacman --needed --noconfirm -S gum less kitty firefox dolphin mpv
+    _yay git-credential-manager-bin
 
-    sudo pacman --needed --noconfirm -S hyprutils waybar pipewire wireplumber hyprpolkitagent xdg-desktop-portal-hyprland slurp grim-hyprland hyprland-qt-support
-    sudo pacman --needed --noconfirm -S hyprsysteminfo hyprpaper waypaper hyprpicker hyprlock hypridle hyprcursor hyprsunset rofi-wayland swappy clipman
+    _pacman gum less kitty firefox dolphin mpv
+
+    _pacman hyprutils waybar pipewire wireplumber hyprpolkitagent xdg-desktop-portal-hyprland slurp grim-hyprland hyprland-qt-support
+    _pacman hyprpaper hyprpicker hyprlock hypridle hyprcursor hyprsunset rofi-wayland swappy
 }
 
 install_user_apps() {
-    sudo pacman --needed --noconfirm -S discord obs-studio spotify-launcher telegram-desktop bitwarden
+    _pacman discord obs-studio spotify-launcher telegram-desktop bitwarden
 }
 
 install_development_pack() {
-    sudo pacman --needed --noconfirm -S blender godot-mono gimp krita
-    _aur "unityhub"
-    _aur "visual-studio-code-bin"
+    _pacman blender godot-mono gimp krita
+    _yay unityhub visual-studio-code-bin
 }
 
 install_games_pack() {
-    sudo pacman --needed --noconfirm -S steam
-    _aur "heroic-games-launcher-bin"
-    _aur "bottles"
+    _pacman steam wine wine-mono
+    _yay bottles heroic-games-launcher-bin
 }
 
 #------------------------------------
