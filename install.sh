@@ -4,7 +4,7 @@
 
 PACMAN_CONF_PATH="/etc/pacman.conf"
 
-BASE_DIR="$HOME/arch-linux-config"
+BASE_DIR="$HOME/.local/share/lexamania"
 
 AUR_PATH="$BASE_DIR/aur_files"
 GIT_PATH="$BASE_DIR/git_files"
@@ -81,7 +81,7 @@ install_base_apps() {
 
     _yay git-credential-manager-bin
 
-    _pacman gum less kitty firefox dolphin mpv
+    _pacman gum less kitty firefox dolphin mpv mplayer meld
 
     _pacman hyprutils waybar pipewire wireplumber hyprpolkitagent xdg-desktop-portal-hyprland slurp grim-hyprland hyprland-qt-support
     _pacman hyprpaper hyprpicker hyprlock hypridle hyprcursor hyprsunset rofi-wayland swappy
