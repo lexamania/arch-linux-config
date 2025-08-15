@@ -81,7 +81,11 @@ install_base_apps() {
 
     _yay git-credential-manager-bin
 
-    _pacman gum less kitty firefox dolphin mpv mplayer meld
+    # main apps
+    _pacman gum less kitty firefox dolphin meld libreoffice-fresh
+
+    # video player
+    _pacman mpv mplayer celluloid
 
     _pacman hyprutils waybar pipewire wireplumber hyprpolkitagent xdg-desktop-portal-hyprland slurp grim-hyprland hyprland-qt-support
     _pacman hyprpaper hyprpicker hyprlock hypridle hyprcursor hyprsunset rofi-wayland swappy
@@ -92,7 +96,8 @@ install_user_apps() {
 }
 
 install_development_pack() {
-    _pacman blender godot-mono gimp krita
+    # scons - c build for godot
+    _pacman blender godot-mono scons gimp krita
     _yay unityhub visual-studio-code-bin
 }
 
