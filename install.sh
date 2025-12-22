@@ -1,12 +1,11 @@
 #! /bin/bash
 
-#add executable rights "chmode +x file_name"
+#add executable rights "chmode +x install.sh"
 
 PACMAN_CONF_PATH="/etc/pacman.conf"
 
-BASE_DIR="$HOME/.local/share/lexamania"
+BASE_DIR="$HOME/.local/share/downloaded_files"
 
-AUR_PATH="$BASE_DIR/aur_files"
 GIT_PATH="$BASE_DIR/git_files"
 BACKUP_PATH="$BASE_DIR/backup"
 
@@ -29,13 +28,12 @@ _yes_no_permission() {
 }
 
 _install_permission() {
-    echo "DO YOU WANT TO INSTALL ${1}?"
+    echo "INSTALL ${1}?"
     return $(_yes_no_permission)
 }
 
 _create_dir_tree() {
     _mkdir_if_need $BASE_DIR
-    _mkdir_if_need $AUR_PATH
     _mkdir_if_need $GIT_PATH
     _mkdir_if_need $BACKUP_PATH
 }
@@ -51,8 +49,8 @@ _enable_multilyb() {
 
 _aur() {
     local full_link="${AUR_LINK}${1}"
-    local full_path="${AUR_PATH}/${1}"
-	git -C ${AUR_PATH} clone ${full_link}
+    local full_path="${GIT_PATH}/${1}"
+	git -C ${GIT_PATH} clone ${full_link}
 	makepkg -si -D ${full_path} --needed --noconfirm
 }
 
@@ -68,36 +66,47 @@ _yay() {
 
 #-----------INSTALLATIONS------------
 
-set_ML4W_screen() {
-    full_link="${GITHUB_LINK}/mylinuxforwork/dotfiles"
-    new_name="ML4W"
-	git -C ${GIT_PATH} clone ${full_link} ${new_name}
-    `${GIT_PATH}/${new_name}/setup_arch.sh`
+preinstall() {
+    _create_dir_tree
+    _enable_multilyb
+    sudo pacman -Syu
 }
 
 install_base_apps() {
-    _pacman git
+    _pacman git base-devel
     _aur "yay"
 
     _yay git-credential-manager-bin
 
     # main apps
-    _pacman gum less kitty firefox dolphin meld libreoffice-fresh
+    _pacman gum less curl neofetch unzip p7zip
 
-    # video player
-    _pacman mpv mplayer celluloid
+    # video apps
+    _pacman mpv mplayer
+}
 
-    _pacman hyprutils waybar pipewire wireplumber hyprpolkitagent xdg-desktop-portal-hyprland slurp grim-hyprland hyprland-qt-support
-    _pacman hyprpaper hyprpicker hyprlock hypridle hyprcursor hyprsunset rofi-wayland swappy
+install_user_navigation_apps() {
+    _pacman kitty dolphin meld
 }
 
 install_user_apps() {
-    _pacman discord obs-studio spotify-launcher telegram-desktop bitwarden
+    _pacman discord spotify-launcher telegram-desktop bitwarden firefox
 }
 
 install_development_pack() {
+    _pacman dotnet-sdk dotnet-sdk-9.0 nodejs docker docker-compose
+    _pacman postgresql
+    _yay visual-studio-code-bin pgadmin4-desktop
+}
+
+install_creative_pack() {
+    _pacman gimp krita obs-studio blender
+    _yay pureref pixelorama davinci-resolve
+}   
+
+install_game_development_pack() {
     # scons - c build for godot
-    _pacman blender godot-mono scons gimp krita
+    _pacman godot-mono scons
     _yay unityhub visual-studio-code-bin
 }
 
@@ -110,33 +119,37 @@ install_games_pack() {
 
 #----------------START---------------
 
-_create_dir_tree
-_enable_multilyb
-sudo pacman -Syu
-
+preinstall
 install_base_apps
 
-echo "Custom installation?"
-if _yes_no_permission; then
-
-	if _install_permission "BASE USER APPS"; then 
+if _install_permission "ALL"; then
+    install_user_apps
+    install_creative_pack
+    install_development_pack
+    install_game_development_pack
+    install_games_pack
+else
+	if _install_permission "USER APPS"; then 
 		install_user_apps
 	fi
 
-	if _install_permission "GAME DEVELOPER PACK"; then 
+	if _install_permission "USER NAVIGATION APPS"; then 
+		install_user_navigation_apps
+	fi
+
+	if _install_permission "CREATIVITY PACK"; then 
+		install_creative_pack
+	fi
+
+	if _install_permission "DEVELOPER PACK"; then 
 		install_development_pack
+	fi
+
+	if _install_permission "GAME DEVELOPER PACK"; then 
+		install_game_development_pack
 	fi
 
 	if _install_permission "GAMER PACK"; then 
     		install_games_pack
 	fi
-
-	if _install_permission "ML4W ENVIRONMENT"; then 
-    		set_ML4W_screen
-	fi
-else
-	install_user_apps
-	install_development_pack
-	install_games_pack
-	set_ML4W_screen
 fi
