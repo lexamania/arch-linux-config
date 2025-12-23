@@ -86,22 +86,23 @@ install_base_apps() {
 }
 
 install_user_navigation_apps() {
-    _pacman kitty dolphin meld
+    _pacman konsole dolphin 
 }
 
 install_user_apps() {
-    _pacman discord spotify-launcher telegram-desktop bitwarden firefox
+    _pacman discord spotify-launcher telegram-desktop firefox thunderbird kodi
 }
 
 install_development_pack() {
-    _pacman dotnet-sdk dotnet-sdk-9.0 nodejs docker docker-compose
+    _pacman nodejs docker docker-compose
     _pacman postgresql
+    _yay dotnet-sdk-9.0-bin dotnet-sdk-bin
     _yay visual-studio-code-bin pgadmin4-desktop
 }
 
 install_creative_pack() {
-    _pacman gimp krita obs-studio blender
-    _yay pureref pixelorama davinci-resolve
+    _pacman gimp krita obs-studio blender kdenlive
+    _yay pureref pixelorama
 }   
 
 install_game_development_pack() {
@@ -124,6 +125,7 @@ install_base_apps
 
 if _install_permission "ALL"; then
     install_user_apps
+    install_user_navigation_apps
     install_creative_pack
     install_development_pack
     install_game_development_pack
