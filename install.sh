@@ -103,6 +103,7 @@ install_development_pack() {
 install_creative_pack() {
     _pacman gimp krita obs-studio blender kdenlive
     _yay pureref pixelorama
+    _yay obs-vkcapture lib32-obs-vkcapture
 }   
 
 install_game_development_pack() {
