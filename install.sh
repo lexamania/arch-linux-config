@@ -83,6 +83,10 @@ install_base_apps() {
 
     # video apps
     _pacman mpv mplayer
+
+    # fonts
+    _pacman ttf-croscore ttf-roboto
+    _yay ttf-ms-fonts ttf-google-fonts-web ttf-google-fonts-nerd noto-fonts-emoji
 }
 
 install_user_navigation_apps() {
