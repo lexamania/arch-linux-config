@@ -1,6 +1,7 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
-#add executable rights "chmode +x install.sh"
+tput smcup
+trap 'tput rmcup' EXIT
 
 PACMAN_CONF_PATH="/etc/pacman.conf"
 
@@ -10,26 +11,50 @@ GIT_PATH="$BASE_DIR/git_files"
 BACKUP_PATH="$BASE_DIR/backup"
 
 AUR_LINK="https://aur.archlinux.org/"
-GITHUB_LINK="https://github.com/"
+
+#------------ECHO_UTILS--------------
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo_separation() {
+    echo "════════════════════════════════════════════════════"
+}
+
+echo_title() {
+    echo_separation
+    echo "  $1"
+    echo_separation
+    echo ""
+}
+
+echo_option() {
+    echo -e "${BLUE}$1)${NC} $2"
+}
+
+echo_line() {
+    echo "  $1"
+    echo ""
+}
+
+echo_success() {
+    echo -e "${GREEN}✓ $1${NC}"
+    echo ""
+}
+
+echo_error() {
+    echo -e "${RED}✗ $1${NC}"
+    echo ""
+}
 
 #----------------UTILS---------------
 
 _mkdir_if_need() {
     mkdir -p $1
-}
-
-_yes_no_permission() {
-    local yn=$(gum choose "yes" "no")
-    if [ "$yn" == "yes" ]; then
-	return 0 #true
-    else 
-	return 1 #false
-    fi
-}
-
-_install_permission() {
-    echo "INSTALL ${1}?"
-    return $(_yes_no_permission)
 }
 
 _create_dir_tree() {
@@ -74,7 +99,7 @@ preinstall() {
 
 install_base_apps() {
     _pacman git base-devel
-    _aur "yay"
+    _aur yay
 
     _yay git-credential-manager-bin
 
@@ -86,29 +111,27 @@ install_base_apps() {
 
     # fonts
     _pacman ttf-croscore ttf-roboto
-    _yay ttf-ms-fonts ttf-google-fonts-web ttf-google-fonts-nerd noto-fonts-emoji
-}
-
-install_user_navigation_apps() {
-    _pacman konsole dolphin 
+    _yay ttf-ms-fonts noto-fonts-emoji
 }
 
 install_user_apps() {
-    _pacman discord spotify-launcher telegram-desktop firefox thunderbird kodi
+    _pacman konsole dolphin 
+    _pacman kodi libnss3 libxss
+    _pacman spotify-launcher telegram-desktop firefox thunderbird
+    _yay vesktop
 }
 
 install_development_pack() {
-    _pacman nodejs docker docker-compose
-    _pacman postgresql
+    _pacman nodejs npm docker docker-compose
     _yay dotnet-sdk-9.0-bin dotnet-sdk-bin
-    _yay visual-studio-code-bin pgadmin4-desktop
+    _yay visual-studio-code-bin
 }
 
 install_creative_pack() {
-    _pacman gimp krita obs-studio blender kdenlive
+    _pacman gimp krita obs-studio blender
     _yay pureref pixelorama
     _yay obs-vkcapture lib32-obs-vkcapture
-}   
+}
 
 install_game_development_pack() {
     # scons - c build for godot
@@ -117,46 +140,75 @@ install_game_development_pack() {
 }
 
 install_games_pack() {
-    _pacman steam wine wine-mono
-    _yay bottles heroic-games-launcher-bin
+    _pacman steam
+    _yay bottles
 }
 
 #------------------------------------
 
 #----------------START---------------
 
+echo_title "Archlinux Apps - Installation"
+
+echo_line "Preparing Installation..."
 preinstall
+
+echo_line "Installing default apps..."
 install_base_apps
 
-if _install_permission "ALL"; then
-    install_user_apps
-    install_user_navigation_apps
-    install_creative_pack
-    install_development_pack
-    install_game_development_pack
-    install_games_pack
-else
-	if _install_permission "USER APPS"; then 
-		install_user_apps
-	fi
+while true; do
 
-	if _install_permission "USER NAVIGATION APPS"; then 
-		install_user_navigation_apps
-	fi
+    echo_title "Menu:"
+    echo_option 1 "Install user apps"
+    echo_option 2 "Install creativity pack"
+    echo_option 3 "Install software development pack"
+    echo_option 4 "Install game development pack"
+    echo_option 5 "Install games pack"
+    echo_option 6 "Install all"
+    echo_option 0 "Exit"
+    echo ""
 
-	if _install_permission "CREATIVITY PACK"; then 
-		install_creative_pack
-	fi
+    read -rp "Enter your choices(1 3 4 ...; 6; or 0): " input
+    read -ra choices <<< "$input"
 
-	if _install_permission "DEVELOPER PACK"; then 
-		install_development_pack
-	fi
+    for choice in "${choices[@]}"; do
+        case $choice in
+            1)
+                install_user_apps
+                echo_success "User apps installed successfully!"
+                ;;
+            2)
+                install_creative_pack
+                echo_success "Crreativity apps installed successfully!"
+                ;;
+            3)
+                install_development_pack
+                echo_success "Software development apps installed successfully!"
+                ;;
+            4)
+                install_game_development_pack
+                echo_success "Game development apps installed successfully!"
+                ;;
+            5)
+                install_games_pack
+                echo_success "Games apps installed successfully!"
+                ;;
+            6)
+                install_user_apps
+                install_creative_pack
+                install_development_pack
+                install_game_development_pack
+                install_games_pack
+                echo_success "All apps installed successfully!"
+                ;;
+            0)
+                exit 0
+                ;;
+            *)
+                echo_error "Invalid choice: $choice"
+                ;;
+        esac
+    done
+done
 
-	if _install_permission "GAME DEVELOPER PACK"; then 
-		install_game_development_pack
-	fi
-
-	if _install_permission "GAMER PACK"; then 
-    		install_games_pack
-	fi
-fi
+exit 0

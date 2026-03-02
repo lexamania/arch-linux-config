@@ -3,7 +3,6 @@
 #add executable rights "chmode +x install_hyperland.sh"
 
 GITHUB_LINK="https://github.com/"
-
 GIT_PATH="$HOME/.local/share/downloaded_files/git_files"
 
 set_ML4W_screen() {
