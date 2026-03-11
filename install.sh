@@ -144,6 +144,12 @@ install_games_pack() {
     _yay bottles
 }
 
+fix_xbox() {
+    sudo pacman -S xboxdrv
+    sudo modprobe -r xpad
+    sudo xboxdrv --silent
+}
+
 #------------------------------------
 
 #----------------START---------------
@@ -155,6 +161,7 @@ preinstall
 
 echo_line "Installing default apps..."
 install_base_apps
+fix_xbox
 
 while true; do
 
