@@ -68,6 +68,10 @@ _enable_multilyb() {
     sudo sed -i -e '/#\[multilib\]/,+1s/^#//' ${PACMAN_CONF_PATH}
 }
 
+_set_parallel_downloads() {
+    sudo sed -i -e 's/^#ParallelDownloads = 5/ParallelDownloads = 5/' ${PACMAN_CONF_PATH}
+}
+
 _enable_firewall() {
     _pacman ufw
     sudo ufw default deny incoming
@@ -106,9 +110,12 @@ _yay() {
 #-----------INSTALLATIONS------------
 
 preinstall() {
+    sudo pacman -Syu
     _create_dir_tree
     _enable_multilyb
-    sudo pacman -Syu
+    _set_parallel_downloads
+    _enable_firewall
+    _fix_xbox
 }
 
 install_base_apps() {
@@ -171,8 +178,6 @@ echo_title "Archlinux Apps - Installation"
 
 echo_line "Preparing Installation..."
 preinstall
-_enable_firewall
-_fix_xbox
 
 echo_line "Installing default apps..."
 install_base_apps
