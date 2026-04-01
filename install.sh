@@ -69,7 +69,7 @@ _enable_multilyb() {
 }
 
 _enable_firewall() {
-    sudo pacman -S ufw
+    _pacman ufw
     sudo ufw default deny incoming
     sudo ufw default allow outgoing
     sudo ufw enable
@@ -77,7 +77,7 @@ _enable_firewall() {
 }
 
 _fix_xbox() {
-    sudo pacman -S xboxdrv
+    _pacman xboxdrv
     sudo modprobe -r xpad
     sudo xboxdrv --silent
 }
