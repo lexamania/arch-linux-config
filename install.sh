@@ -68,6 +68,20 @@ _enable_multilyb() {
     sudo sed -i -e '/#\[multilib\]/,+1s/^#//' ${PACMAN_CONF_PATH}
 }
 
+_enable_firewall() {
+    sudo pacman -S ufw
+    sudo ufw default deny incoming
+    sudo ufw default allow outgoing
+    sudo ufw enable
+    sudo systemctl enable ufw
+}
+
+_fix_xbox() {
+    sudo pacman -S xboxdrv
+    sudo modprobe -r xpad
+    sudo xboxdrv --silent
+}
+
 #------------------------------------
 
 #--------CUSTOM INSTALLATIONS--------
@@ -139,16 +153,15 @@ install_game_development_pack() {
     _yay unityhub visual-studio-code-bin
 }
 
-install_games_pack() {
+install_gamer_pack() {
     _pacman steam
     _yay bottles
 }
 
-fix_xbox() {
-    sudo pacman -S xboxdrv
-    sudo modprobe -r xpad
-    sudo xboxdrv --silent
+install_fun_apps() {
+    _pacman kstars
 }
+
 
 #------------------------------------
 
@@ -158,20 +171,22 @@ echo_title "Archlinux Apps - Installation"
 
 echo_line "Preparing Installation..."
 preinstall
+_enable_firewall
+_fix_xbox
 
 echo_line "Installing default apps..."
 install_base_apps
-fix_xbox
 
 while true; do
 
     echo_title "Menu:"
-    echo_option 1 "Install user apps"
-    echo_option 2 "Install creativity pack"
-    echo_option 3 "Install software development pack"
-    echo_option 4 "Install game development pack"
-    echo_option 5 "Install games pack"
-    echo_option 6 "Install all"
+    echo_option 1 "Install all"
+    echo_option 2 "Install user apps"
+    echo_option 3 "Install creativity pack"
+    echo_option 4 "Install software development pack"
+    echo_option 5 "Install game development pack"
+    echo_option 6 "Install gamer pack"
+    echo_option 7 "Install fun apps"
     echo_option 0 "Exit"
     echo ""
 
@@ -182,31 +197,36 @@ while true; do
         case $choice in
             1)
                 install_user_apps
-                echo_success "User apps installed successfully!"
+                install_creative_pack
+                install_development_pack
+                install_game_development_pack
+                install_gamer_pack
+                install_fun_apps
+                echo_success "All apps installed successfully!"
                 ;;
             2)
+                install_user_apps
+                echo_success "User apps installed successfully!"
+                ;;
+            3)
                 install_creative_pack
                 echo_success "Crreativity apps installed successfully!"
                 ;;
-            3)
+            4)
                 install_development_pack
                 echo_success "Software development apps installed successfully!"
                 ;;
-            4)
+            5)
                 install_game_development_pack
                 echo_success "Game development apps installed successfully!"
                 ;;
-            5)
-                install_games_pack
-                echo_success "Games apps installed successfully!"
-                ;;
             6)
-                install_user_apps
-                install_creative_pack
-                install_development_pack
-                install_game_development_pack
-                install_games_pack
-                echo_success "All apps installed successfully!"
+                install_gamer_pack
+                echo_success "Gamer apps installed successfully!"
+                ;;
+            7)
+                install_fun_apps
+                echo_success "Fun apps installed successfully!"
                 ;;
             0)
                 exit 0
