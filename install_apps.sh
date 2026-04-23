@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+# Start new session for better output
 tput smcup
 trap 'tput rmcup' EXIT
+
+
+#------------Variables---------------
 
 PACMAN_CONF_PATH="/etc/pacman.conf"
 
@@ -118,7 +122,7 @@ preinstall() {
     _fix_xbox
 }
 
-install_base_apps() {
+install_default_apps() {
     _pacman git base-devel
     _aur yay
 
@@ -126,9 +130,13 @@ install_base_apps() {
 
     # main apps
     _pacman gum less curl neofetch unzip p7zip
+    _pacman konsole dolphin
 
     # video apps
-    _pacman mpv mplayer
+    _pacman mpv vlc
+
+    # disk space
+    _pacman gparted exfatprogs ntfs-3g
 
     # fonts
     _pacman ttf-croscore ttf-roboto
@@ -136,7 +144,6 @@ install_base_apps() {
 }
 
 install_user_apps() {
-    _pacman konsole dolphin 
     _pacman kodi libnss3 libxss
     _pacman spotify-launcher telegram-desktop firefox thunderbird
     _yay vesktop
@@ -180,7 +187,7 @@ echo_line "Preparing Installation..."
 preinstall
 
 echo_line "Installing default apps..."
-install_base_apps
+install_default_apps
 
 while true; do
 
