@@ -133,6 +133,10 @@ install_user_apps() {
     _yay vesktop zen-browser
 }
 
+install_office() {
+    _pacman libreoffice-fresh onlyoffice-bin
+}
+
 install_development_pack() {
     _pacman nodejs npm docker docker-compose
     _yay dotnet-sdk-9.0-bin dotnet-sdk-bin
@@ -182,7 +186,8 @@ while true; do
     echo_option 4 "Install software development pack"
     echo_option 5 "Install game development pack"
     echo_option 6 "Install gamer pack"
-    echo_option 7 "Install fun apps"
+    echo_option 7 "Install office"
+    echo_option 8 "Install fun apps"
     echo_option 0 "Exit"
     echo ""
 
@@ -206,7 +211,7 @@ while true; do
                 ;;
             3)
                 install_creative_pack
-                echo_success "Crreativity apps installed successfully!"
+                echo_success "Creativity apps installed successfully!"
                 ;;
             4)
                 install_development_pack
@@ -221,6 +226,10 @@ while true; do
                 echo_success "Gamer apps installed successfully!"
                 ;;
             7)
+                install_office
+                echo_success "Office apps installed successfully!"
+                ;;
+            8)
                 install_fun_apps
                 echo_success "Fun apps installed successfully!"
                 ;;
