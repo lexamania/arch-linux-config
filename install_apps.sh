@@ -76,20 +76,6 @@ _set_parallel_downloads() {
     sudo sed -i -e 's/^#ParallelDownloads = 5/ParallelDownloads = 5/' ${PACMAN_CONF_PATH}
 }
 
-_enable_firewall() {
-    _pacman ufw
-    sudo ufw default deny incoming
-    sudo ufw default allow outgoing
-    sudo ufw enable
-    sudo systemctl enable ufw
-}
-
-_fix_xbox() {
-    _pacman xboxdrv
-    sudo modprobe -r xpad
-    sudo xboxdrv --silent
-}
-
 #------------------------------------
 
 #--------CUSTOM INSTALLATIONS--------
@@ -118,8 +104,6 @@ preinstall() {
     _create_dir_tree
     _enable_multilyb
     _set_parallel_downloads
-    _enable_firewall
-    _fix_xbox
 }
 
 install_default_apps() {
@@ -145,8 +129,8 @@ install_default_apps() {
 
 install_user_apps() {
     _pacman kodi libnss3 libxss
-    _pacman spotify-launcher telegram-desktop firefox thunderbird
-    _yay vesktop
+    _pacman spotify-launcher telegram-desktop thunderbird
+    _yay vesktop zen-browser
 }
 
 install_development_pack() {
