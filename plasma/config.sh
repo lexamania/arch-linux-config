@@ -5,7 +5,7 @@ _pacman() {
 }
 
 _install_plasma_apps() {
-    _pacman plasma-desktop plasma-nm plasma-pa plasma-systemmonitor plasma-wayland-session
+    _pacman plasma-desktop plasma-nm plasma-pa plasma-systemmonitor sddm-kcm
 }
 
 _install_plasma_apps

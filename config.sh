@@ -8,6 +8,10 @@ _pacman() {
     sudo pacman --needed --noconfirm -S "$@"
 }
 
+_yay() {
+    yay --needed --noconfirm -S "$@"
+}
+
 enable_firewall() {
     _pacman ufw
     sudo ufw default deny incoming
@@ -22,7 +26,7 @@ configure_pipewire(){
 }
 
 fix_xboxpad() {
-    _pacman xboxdrv
+    _yay xboxdrv
     sudo modprobe -r xpad
     sudo xboxdrv --silent
 }

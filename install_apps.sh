@@ -100,10 +100,10 @@ _yay() {
 #-----------INSTALLATIONS------------
 
 preinstall() {
-    sudo pacman -Syu
     _create_dir_tree
     _enable_multilyb
     _set_parallel_downloads
+    sudo pacman -Syu
 }
 
 install_default_apps() {
@@ -130,7 +130,7 @@ install_default_apps() {
 install_user_apps() {
     _pacman kodi libnss3 libxss
     _pacman spotify-launcher telegram-desktop thunderbird
-    _yay vesktop zen-browser
+    _yay vesktop zen-browser-bin
 }
 
 install_office() {
