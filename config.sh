@@ -31,6 +31,13 @@ fix_xboxpad() {
     sudo xboxdrv --silent
 }
 
+enable_bluetooth() {
+    _pacman bluez bluez-utils
+    sudo systemctl enable bluetooth
+    sudo systemctl start bluetooth
+}
+
 enable_firewall
 configure_pipewire
 fix_xboxpad
+enable_bluetooth
