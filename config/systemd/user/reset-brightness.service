@@ -1,0 +1,8 @@
+[Unit]
+Description=Reset brightness after suspend
+
+[Service]
+ExecStart=/bin/bash -c 'qdbus org.kde.KWin /ColorCorrect setActive false; sleep 1; qdbus org.kde.KWin /ColorCorrect setActive true'
+
+[Install]
+WantedBy=default.target
