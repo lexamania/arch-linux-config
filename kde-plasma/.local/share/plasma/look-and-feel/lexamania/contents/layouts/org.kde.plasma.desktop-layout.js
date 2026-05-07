@@ -122,7 +122,7 @@ var layout = {
                 {
                     "config": {
                         "/General": {
-                            "launchers": "preferred://browser,applications:org.telegram.desktop.desktop,applications:spotify-launcher.desktop,applications:vesktop.desktop,applications:code.desktop,applications:steam.desktop,applications:org.mozilla.Thunderbird.desktop,applications:org.kde.dolphin.desktop,applications:org.kde.konsole.desktop,applications:systemsettings.desktop"
+                            "launchers": "preferred://browser,applications:org.kde.dolphin.desktop,applications:org.kde.konsole.desktop,applications:systemsettings.desktop"
                         }
                     },
                     "plugin": "org.kde.plasma.icontasks"
@@ -137,6 +137,7 @@ var layout = {
                 }
             },
             "height": 4.5,
+            "width": "fit-content",
             "hiding": "dodgewindows",
             "location": "bottom",
             "maximumLength": 120,
