@@ -1,0 +1,26 @@
+Archive files by parts:
+
+  ~ 7z a -tzip -v500m archive_name.zip /path/to/folder
+    -- a - archive
+    -- tzip - zip format
+    -- v500m - size
+    -- need 7zip package
+    -- result: *.zip.001/002/003
+
+  ~ zip -r -s 500m archive_name.zip /path/to/folder
+    -- s 500m - size
+    -- r - recursively
+    -- need zip/unzip package
+    -- result: *.zip/z01/z02
+
+  ~ tar -czf - /path/to/folder | split --bytes=500M - backup_archive.tar.gz.
+    -- c - compressed
+    -- z - gzip compression
+    -- f - writes to the archive
+    -- - - write to standart output
+    -- bytes=500M  - size
+    -- result: backup_archive.tar.gz.aa/ab/ac
+
+Recombine/extract parts:
+
+  ~ cat backup_archive.tar.gz.* | tar -xzf -
