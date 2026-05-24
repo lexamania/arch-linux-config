@@ -1,11 +1,13 @@
 Archive files by parts:
 
   ~ 7z a -tzip -v500m archive_name.zip /path/to/folder
+    7z a -v2g protected.7z /path/to/files -p -mhe=on
     -- a - archive
     -- tzip - zip format
     -- v500m - size
     -- need 7zip package
     -- result: *.zip.001/002/003
+    -- p - password
 
   ~ zip -r -s 500m archive_name.zip /path/to/folder
     -- s 500m - size
