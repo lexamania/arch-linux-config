@@ -1,0 +1,18 @@
+Usb list
+ - lsubs -t
+
+Connected usb devices
+ - ls /sys/bus/usb/devices
+
+Disconnect/connect usb device
+ - echo '1-1' | sudo tee /sys/bus/usb/drivers/usb/unbind
+ - echo '1-1' | sudo tee /sys/bus/usb/drivers/usb/bind
+ - 1-1 - device number from 'devices'
+
+Usb controller list
+ - lspci | grep -i usb
+
+Disconnect/connect usb controller
+ - echo '1-1' | sudo tee /sys/bus/pci/drivers/xhci_hcd/unbind
+ - echo '1-1' | sudo tee /sys/bus/pci/drivers/xhci_hcd/bind
+ - 1-1 - device number from 'controllers'

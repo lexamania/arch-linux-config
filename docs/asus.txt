@@ -1,0 +1,12 @@
+If usb devices/usb adapters disconnect after reboot
+ - Advanced -> APM Configuration -> ErP Ready = Enable(S4+S5/S5)
+ - This forces the motherboard to cut standby power to USB during shutdown/reboot
+
+ - USB power delivery in Soft Off State (S5) = Disabled
+ - Will be set automatically after setting above
+ - Not every ASUS BIOS exposes this option
+
+ - Boot -> Fast Boot = Disabled
+
+Recomended for all motherboards
+ - Update BIOS to the latest stable
