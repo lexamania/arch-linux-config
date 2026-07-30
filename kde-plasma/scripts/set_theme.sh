@@ -2,5 +2,5 @@
 
 cp -r ../src/. ~/
 
-plasma-apply-lookandfeel lexamania
+plasma-apply-lookandfeel lexamania-dark
 systemctl --user restart plasma-plasmashell

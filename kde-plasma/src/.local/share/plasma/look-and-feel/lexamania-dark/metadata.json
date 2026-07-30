@@ -1,0 +1,19 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "",
+                "Name": "Lexamania"
+            }
+        ],
+        "Description": "",
+        "Id": "lexamania-dark",
+        "License": "",
+        "Name": "lexamania-dark",
+        "Website": ""
+    },
+    "Keywords": "Desktop;Workspace;Appearance;Look and Feel;lexamania;dark;",
+    "X-Plasma-APIVersion": "2",
+    "X-Plasma-MainScript": "default"
+}
