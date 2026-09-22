@@ -1,0 +1,4 @@
+1. Add Windows/Other OS to grub options:
+ - sudo pacman -S os-prober
+ - enable 'GRUB_DISABLE_OS_PROBER=false' in /etc/default/grub
+ - sudo grub-mkconfig -o /boot/grub/grub.cfg
