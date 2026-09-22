@@ -1,4 +1,9 @@
 1. Add Windows/Other OS to grub options:
  - sudo pacman -S os-prober
- - enable 'GRUB_DISABLE_OS_PROBER=false' in /etc/default/grub
+ - /etc/default/grub: enable 'GRUB_DISABLE_OS_PROBER=false'
+ - sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+2. Upgrade grub theme
+ - /boot/grub/themes: copy theme here (cp -r)
+ - /etc/default/grub: set 'GRUB_THEME="/boot/grub/themes/$theme_dir/theme.txt'
  - sudo grub-mkconfig -o /boot/grub/grub.cfg
