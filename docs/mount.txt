@@ -1,0 +1,8 @@
+1. Set automount for partition
+ - lsblk -f (find UUID of your partiotion)
+ - mkdir -m /mnt/$dir (/mnt/data; /mnt/diskD; ...)
+ - /etc/fstab: add 'UUID=$PARTIOTION_UUID  /mnt/$dir  $FSTYPE  defaults,nofail  0  $fsck'
+    $fsck - check order
+        0 = don't automatically check the filesystem with fsck.
+        1 = check first. Normally used only for the root filesystem /.
+        2 = check after the root filesystem. Typically used for other Linux filesystems such as an additional ext4 partition.
