@@ -8,3 +8,13 @@
  - /etc/default/grub: set 'GRUB_THEME="/boot/grub/themes/$theme_dir/theme.txt"'
  - /etc/default/grub: set 'GRUB_GFXMODE="1920x1080,auto"'
  - sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+3. Update timeout:
+ - /etc/default/grub: set 'GRUB_TIMEOUT=$time' (-1 = infinity)
+
+4. Update entries:
+ - /etc/grub.d: change rule exec permission to disable
+
+5. Own custom entries:
+ - /etc/grub.d/40-custom: modify it
+    
